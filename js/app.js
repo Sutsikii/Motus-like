@@ -4,6 +4,8 @@ refresh = document.querySelector(".refresh-word"),
 checkBtn = document.querySelector(".check-word"),
 inputField = document.querySelector("input");
 
+let correctWord;
+
 const initGame = () => 
 {
     let randomObj = words[Math.floor(Math.random() * words.length)]; // Prend un objet du tableau
@@ -17,6 +19,7 @@ const initGame = () =>
 
     wordText.innerText = wordArray.join(""); // On passe le texte dans l'html
     wordHint.innerText = randomObj.hint; 
+    correctWord = randomObj.word.toLowerCase(); // on remet le mot correctement
     console.log(randomObj.word, wordArray);
 }
 
@@ -25,7 +28,13 @@ initGame();
 const checkWord = () => 
 {
     let userWord = inputField.value.toLocaleLowerCase();
-    console.log(userWord);
+
+    if(!userWord) return alert("Il faut écrire un mot !");
+
+    if(userWord !== correctWord) return alert(`Oops ! ${userWord} n'est pas correct !`);
+
+    alert(`Bravo ${userWord.toUpperCase()} est le bon mot !`)
+    initGame();
 }
 
 refresh.addEventListener("click", initGame);
